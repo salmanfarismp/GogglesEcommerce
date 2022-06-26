@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class=" row bg-light main-body m-2 ">
+    <div class="col-md-2 mb-2 mt-2 ">
+        <div class=" nav-title ">
+            <h4>MY ACCOUNT</h4>
+        </div>
+        <div class="navingations">
+            <ul>
+                <li>
+                    <div class="nav-btn btn" id="current">
+                        <a href="{% url 'account' %}" class=" ">Personal Detailes</a>
+                    </div>
+                    
+                    
+                </li>
+                <li class="nav-btn">
+                    <div class=" btn">
+                        <a href="{% url 'profile_shipping' %}" class=" ">Shipping Addresses</a>
+                    </div>
+                    
+                </li>
+                <li>
+                    <div class="nav-btn btn">
+                        <a href="{% url 'profile_order' %}" class=" ">Order Detailes</a>
+                    </div>
+                    
+                </li>
+                <li>
+                    <div class="nav-btn btn">
+                        <a href="{% url 'password-change-view' %}" class=" ">Change Password</a>
+                    </div>
+                    
+                </li>
+            </ul>
+        </div>
+        
+        <div class="nav-body">
+
+        </div>
+    </div>
+    <div class="col-md-10 container-fluid " >
+       <div class=" container-fluid  box-element mb-5  mt-5 ">
+           <div class="d-flex" style="justify-content: space-between;">
+                <div class="headdline">
+                    <h4>MY DETAILS</h4>
+
+                </div>
+                <div class="edit_address">
+                    <a href="{% url 'edit_address' %}"  class="btn btn-info">Edit</a>
+                </div>
+
+           </div>
+           
+            <div class="peronal row " >
+                <div class="col-md-4" >
+                    <ul>
+                        <li>
+                            <div class="fields m-2">
+                                <p>
+                                    FIRST NAME : {{user.first_name}}
+                                </p>
+                            </div>
+                            
+                        </li>
+                        <li>
+                            <div class="fields m-2">
+                                <p>
+                                    USERNAME : {{user.username}}
+                                </p>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div class="fields m-2">
+                                <p>
+                                    PHONE NUMBER : {{user.phone_number}}
+                                </p>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul>
+                        <li>
+                            <div class="fields m-2">
+                                <p>
+                                    LAST NAME : {{user.last_name}}
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="fields m-2">
+                                <p>
+                                    EMAIL ADDRESS : {{user.email}}
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            
+                        </li>
+                    </ul>
+                </div>
+               
+            </div>
+            <div class="headdline">
+                <h4>Refer & Get a Coupon</h4>
+            </div>
+            <div class=" col-md-10 mt-3" >
+                   
+                <div class="mb-2 bg-light d-flex" style="width: fit-content;" >
+                    <p id="ref_id" style="font-size: 0.6rem;"> <strong> http://127.0.0.1:8000/{{user.ref_code}}</strong></p>
+                    <button id="copylink" class="ml-4 btn btn-outline-info py-0">Copy Link</button>
+                   
+                    
+                </div>
+                    
+
+                
+                <p>Send this Referal link to your friends and get a discount coupon while they signup</p>
+            </div>
+                
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script>
+    $('#copylink').click(function () {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($('#ref_id').text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+        
+      })
+</script>
+{% endblock scripts %}
+
+

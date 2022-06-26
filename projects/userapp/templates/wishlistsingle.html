@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+		<!-- banner -->
+		<div >
+			<a class="btn m-2" style="color: black; border: solid 1px;" href="{% url 'wishlist' %}">Go back</a>
+
+		</div>
+		
+	</div>
+		<!--//banner -->
+		<!--/shop-->
+		<section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+			<div class="container">
+				<div class="inner-sec-shop pt-lg-4 pt-3">
+					<div class="row wished{{product.id}}">
+							<div class="col-lg-4 single-right-left ">
+									<div class="grid images_3_of_2">
+										<div class="flexslider1">
+					
+											<ul class="slides">
+												<li data-thumb="{{ product.product_image.url }}">
+													<div class="thumb-image"> <img src="{{ product.product_image.url }}" data-imagezoom="true" class="img-fluid" alt=" "> </div>
+												</li>
+												<li data-thumb="{{product.product_img_left.url }}">
+													<div class="thumb-image"> <img src="{{ product.product_img_left.url }}" data-imagezoom="true" class="img-fluid" alt=" "> </div>
+												</li>
+												<li data-thumb="{{ product.product_img_right.url }}">
+													<div class="thumb-image"> <img src="{{product.product_img_right.url }}" data-imagezoom="true" class="img-fluid" alt=" "> </div>
+												</li>
+											</ul>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-8 single-right-left simpleCart_shelfItem">
+									<span class="" style="position: absolute; top: 0; right: 0;">
+										
+										<div class="{% if product.id not in wishes %}d-none{% endif %}" id="add_wish">
+											<button class="btn wish " style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="remove" >
+												<i class="fas fa-heart text-danger "></i>
+											</button>
+										</div>
+										
+										<div class="{% if product.id in wishes %}d-none{% endif %}" id="remove_wish">
+											<button class="btn wish" style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="add" >
+												<i class="far fa-heart"></i> 
+											</button> 
+										</div>	    
+										 
+									</span>
+									<h3>{{product.brand.brand_name}}</h3>
+									<h5>{{product.product_name}}</h5>
+									{% if product.product_category.c_offer.percent == Null and product.p_offer.percent == Null %}
+									<span class="money "><i class="fas fa-rupee-sign"></i>{{product.product_price}}</span>
+									{% else %}
+									<span class="money "><i class="fas fa-rupee-sign"></i>{{product.product_discount_price}}</span>
+									<span class="money "><del><i class="fas fa-rupee-sign"></i>{{product.product_price}}</del></span>
+									{% endif %}
+									<p><span id="stockmsg2" class="text-danger" >Out Of Stock</span></p>
+									{% if product.quantity_available == 0 %}
+									<p><span class="text-danger" >Out Of Stock</span></p>
+									{% endif %}
+									
+									<div class="description">
+										<h5>{{product.product_description}}</h5>
+									</div>
+									<!-- <div class="color-quality">
+										<div class="color-quality-right">
+											<h5>Quality :</h5>
+											<select id="country1" onchange="change_country(this.value)" class="frm-field required sect">
+													<option value="null">5 Qty</option>
+													<option value="null">6 Qty</option> 
+													<option value="null">7 Qty</option>					
+													<option value="null">10 Qty</option>								
+												</select>
+										</div>
+									</div>
+									<div class="occasional">
+										<h5>Types :</h5>
+										<div class="colr ert">
+											<label class="radio"><input type="radio" name="radio" checked=""><i></i> Irayz Butterfly(Black)</label>
+										</div>
+										<div class="colr">
+											<label class="radio"><input type="radio" name="radio"><i></i> Irayz Butterfly (Grey)</label>
+										</div>
+										<div class="colr">
+											<label class="radio"><input type="radio" name="radio"><i></i> Irayz Butterfly (white)</label>
+										</div>
+										<div class="clearfix"> </div>
+									</div> -->
+									<div class="occasion-cart">
+											<div class="googles single-item singlepage">
+												<div class=" ">
+													{% if product.quantity_available != 0 %}
+													<a style="display: block;" data-in_shop="true" data-product="{{product.id}}" data-action="add" class="update-cart add-btn btn m-1 bg-light"><i class="fas fa-cart-plus"></i></a >
+														<a href="{% url 'buynow' product.id %}" style="display: block"class=" add-btn btn m-1 bg-light text-dark">Buy Now<ion-icon class="text-danger" name="flash-outline"></ion-icon></a>
+													{% endif %}
+												</div>
+												
+		
+											</div>
+									</div>
+								</div>
+								<div class="clearfix"> </div>
+								
+					
+					</div>
+				</div>
+			</div>
+				
+		</section>
+		<!--footer -->
+		
+        {% endblock content %}
+		

@@ -1,0 +1,500 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+    <div class="container-fluid">
+        <div class="inner-sec-shop px-lg-4 px-3">
+            
+            <div class="row ">
+                <div class="col-md-3 side-bar ">
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Sort By
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <button class="dropdown-item sort_products" data-sort="1" >Price - low to high</button>
+                          <button class="dropdown-item sort_products" data-sort="2" >Price - high to low</button>
+                          <button class="dropdown-item sort_products" data-sort="3" >New Arrivals</button>
+                        </div>
+                      </div>
+                      
+                    <div class="search-hotel">
+                        <h3 class="agileits-sear-head">Categories</h3> 
+                        <div class="cats d-flex flex-column">
+                        {% for category in categories %}
+                        <ul>
+                            <li>
+                                <input class="filter-checkbox" data-filter="category" value="{{category.id}}" type="checkbox" />&nbsp;
+                                {{category.category_name}}
+                            </li>
+                        </ul>
+                            
+                        {% endfor %}
+                        </div> 
+                        
+                    </div>              
+                   
+                    <div class="search-hotel">
+                        <h3 class="agileits-sear-head">Brands</h3> 
+                        <div class="cats d-flex flex-column">
+                        {% for brand in brands %}
+                        <ul>
+                            <li>
+                                <input class="filter-checkbox" data-filter="brand" value="{{brand.id}}" type="checkbox" />&nbsp;
+                            {{brand.brand_name}}
+                            </li>
+                        </ul>
+                            
+                        {% endfor %}
+                        </div> 
+                        
+                    </div>                 
+                    <div class="search-hotel">
+                        <h3 class="agileits-sear-head">Search Here..</h3>
+                        <form action="{% url 'search' %}">
+                                <input class="form-control"  type="search" id="search-input" name="keyword" placeholder="Search here..." required="">
+                                <button type="submit" class="btn1">
+                                        <i class="fas fa-search"></i>
+                                </button>
+                                <div class="clearfix"> </div>
+                        </form>
+                    </div>
+                    
+                    <!-- price range -->
+                    <h3 class="agileits-sear-head">Price Range</h3>
+                    <div class="wrapper">                      
+                            <div class="price-input ">
+                                
+                            <div class="field">
+                                <span>Min</span>
+                                <input type="number" id="input_min" style="pointer-events: none;" class="input-min price_range" value="1500">
+                            </div>
+                            <div class="separator">-</div>
+                            <div class="field">
+                                <span>Max</span>
+                                <input type="number" id="input_max" style="pointer-events: none;" class="input-max price_range " value="3500">
+                            </div>
+                            </div>
+                            <div class="slider">
+                            <div class="progress"></div>
+                            </div>
+                            <div class="range-input">
+                            <input type="range" id="range_min" class="range-min price_range" min="0" max="5000" value="1500" step="100">
+                            <input type="range" id="range_max" class="range-max price_range" min="0" max="5000" value="3500" step="100">
+                            </div>
+                            
+                    </div>
+                    
+                    <!-- //price range -->
+                    <!--preference -->
+                    
+                    <!-- // preference -->
+                    <!-- discounts -->
+                    <!-- <div class="left-side">
+                        <h3 class="agileits-sear-head">Discount</h3>
+                        <ul>
+                            <form action="">
+                            <li>
+                                <input name="discount" value="5" type="radio" class="checked">
+                                <span class="span">5% or More</span>
+                            </li>
+                            <li>
+                                <input name="discount" value="10" type="radio" class="checked">
+                                <span class="span">10% or More</span>
+                            </li>
+                            <li>
+                                <input name="discount" value="20" type="radio" class="checked">
+                                <span class="span">20% or More</span>
+                            </li>
+                            <li>
+                                <input name="discount" value="30" type="radio" class="checked">
+                                <span class="span">30% or More</span>
+                            </li>
+                            <li>
+                                <input name="discount" value="50" type="radio" class="checked">
+                                <span class="span">50% or More</span>
+                            </li>
+                            <li>
+                                <input name="discount" value="60" type="radio" class="checked">
+                                <span class="span">60% or More</span>
+                            </li>
+                        </form>
+                        </ul>
+                    </div> -->
+                    <!-- //discounts -->
+                    <!-- reviews -->
+                    <!-- <div class="customer-rev left-side">
+                        <h3 class="agileits-sear-head">Customer Review</h3>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <span>5.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>4.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>3.5</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>3.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>2.5</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div> -->
+                </div>
+
+                <div class="col-md-9 " >
+                    <div class="row" id="filteredProducts"  style="width: 100%; height:fit-content">
+                        <!-- <p class="ajaxLoader">Loading...</p> -->
+                        {% if page == 'NoResult' %}
+                        <img style="width: 100%;"src="{% static  'images/NoSearchResult.png' %}">
+                        {% else %}
+                        {% for product in products %}
+                        <div id="{{product.id}}" class="col-md-4 mb-3 wished{{product.id}} product-men women_two" style="position: relative;">
+                            <div class="product-googles-info googles">
+                                <div class="men-pro-item">
+                                    <div class="men-thumb-item">
+                                        <img src="{{product.product_image.url}}" class="img-fluid" alt="">
+                                        <div class="men-cart-pro">
+                                            <div class="inner-men-cart-pro">
+                                                <a href="{% url 'single' product.id %}" class="link-product-add-cart">Quick View</a>
+                                            </div>
+                                        </div>
+                                        <span class="" style="position: absolute; top: 0; right: 0;">
+										
+                                            <div class="{% if product.id not in wishes %}d-none{% endif %}" id="add_wish">
+                                                <button class="btn wish " style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="remove" >
+                                                    <i class="fas fa-heart text-danger "></i>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="{% if product.id in wishes %}d-none{% endif %}" id="remove_wish">
+                                                <button class="btn wish" style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="add" >
+                                                    <i class="far fa-heart"></i> 
+                                                </button> 
+                                            </div>	    
+                                             
+                                        </span>
+                                    </div>
+                                    <div class="item-info-product">
+                                        <div class="info-product-price">
+                                            <div class="">
+                                                <div class="product_price">
+                                                    <h4>
+                                                        <a href="{% url 'single' product.id %}">{{product.brand.brand_name}}</a>
+                                                    </h4>
+                                                    <div class="grid-price mt-2">
+                                                        {% if product.product_category.c_offer.percent == Null and product.p_offer.percent == Null %}
+                                                        <span class="money "><i class="fas fa-rupee-sign"></i>{{product.product_price}}</span>
+                                                        {% else %}
+                                                        <span class="money "><i class="fas fa-rupee-sign"></i>{{product.product_discount_price}}</span>
+                                                        <span class="money "><del><i class="fas fa-rupee-sign"></i>{{product.product_price}}</del></span>
+                                                        {% endif %}
+                                                        <p><span id="stockmsg2" class="text-danger" >Out Of Stock</span></p>
+                                                        {% if product.quantity_available == 0 %}
+                                                        <p><span class="text-danger" >Out Of Stock</span></p>
+                                                        {% endif %}
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex">
+                                                    {% if product.quantity_available != 0 %}
+                                                    <a data-product="{{product.id}}" data-in_shop="true" data-action="add" class="update-cart add-btn btn m-1 bg-light">Add to Cart<i class="fas fa-cart-plus"></i></a>
+                                                    <a href="{% url 'buynow' product.id %}" class=" add-btn btn m-1 bg-light">Buy Now<ion-icon class="text-danger" name="flash-outline"></ion-icon></a>
+                                                    {% endif %}
+                                                </div>
+                            
+                                            </div>
+                                            
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+
+                    </div>
+                    <!-- <div class="row d-flex justify-content-center align-center">
+                        <p class="my-4 text-center"><button id="loadMore" data-total="{{total_products}}" data-limit="3" class="btn btn-dark btn-sm">Load More <i class="fa fa-sync load-more-icon"></i></button></p>
+                    </div> -->
+                       
+                </div>
+                
+                <!-- /womens -->
+               
+                <!-- /mens -->
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    /* Import Google Font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+
+::selection{
+  color: #fff;
+  background: #ff4e00;
+}
+.wrapper{
+  width: fit-content;
+    margin: 1rem;
+ 
+}
+
+.price-input{
+  width: 100%;
+  display: flex;
+  margin: 30px 0 35px;
+}
+.price-input .field{
+  display: flex;
+  width: 100%;
+  height: 45px;
+  align-items: center;
+}
+.field input{
+  width: 100%;
+  height: 100%;
+  outline: none;
+  font-size: 19px;
+  margin-left: 12px;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px solid #999;
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.price-input .separator{
+  width: 130px;
+  display: flex;
+  font-size: 19px;
+  align-items: center;
+  justify-content: center;
+}
+.slider{
+  height: 5px;
+  position: relative;
+  background: #ddd;
+  border-radius: 5px;
+}
+.slider .progress{
+  height: 100%;
+  left: 30%;
+  right: 30%;
+  position: absolute;
+  border-radius: 5px;
+  background: #ff4e00;
+}
+.range-input{
+  position: relative;
+}
+.range-input input{
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  top: -5px;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+input[type="range"]::-webkit-slider-thumb{
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  background: #ff4e00;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+}
+input[type="range"]::-moz-range-thumb{
+  height: 17px;
+  width: 17px;
+  border: none;
+  border-radius: 50%;
+  background: #ff4e00;
+  pointer-events: auto;
+  -moz-appearance: none;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+}
+</style>
+{% endblock content %}
+{% block scripts%}
+<script src="{% static 'js/mainshop.js' %}"></script>
+<script src="{% static 'js/product_filter.js' %}"></script>
+<script src="script.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#loadMore").on('click',function(){
+				var _currentProducts=$(".product-box").length;
+				var _limit=$(this).attr('data-limit');
+				var _total=$(this).attr('data-total');
+				// Start Ajax
+				$.ajax({
+					url:'/load-more-data',
+					data:{
+						limit:_limit,
+						offset:_currentProducts
+					},
+					dataType:'json',
+					beforeSend:function(){
+						$("#loadMore").attr('disabled',true);
+						$(".load-more-icon").addClass('fa-spin');
+					},
+					success:function(res){
+						
+						$("#filteredProducts").append(res.data);
+						$("#loadMore").attr('disabled',false);
+						$(".load-more-icon").removeClass('fa-spin');
+		
+						var _totalShowing=$(".product-box").length;
+						if(_totalShowing==_total){
+							$("#loadMore").remove();
+						}
+					}
+				});
+				// End
+			});
+		});
+		
+			// Product Variation
+			
+		
+			
+	</script>
+    <script>
+        $(".sort_products").on('click',function(){
+            
+            var sort = $(this).data('sort')
+            
+            $.ajax({
+                
+                url : "{% url 'sortproducts' %}",
+                data : {
+                    sort : sort,        
+                },
+                dataType: 'json',
+                success:function(rslt){
+                    
+                    $("#filteredProducts").html(rslt.data);
+                }
+            });
+        });
+
+    </script>
+    <script>
+            const rangeInput = document.querySelectorAll(".range-input input"),
+            priceInput = document.querySelectorAll(".price-input input"),
+            range = document.querySelector(".slider .progress");
+            let priceGap = 1000;
+
+            priceInput.forEach(input =>{
+                input.addEventListener("input", e =>{
+                    let minPrice = parseInt(priceInput[0].value),
+                    maxPrice = parseInt(priceInput[1].value);
+                    
+                    if((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max){
+                        if(e.target.className === "input-min"){
+                            rangeInput[0].value = minPrice;
+                            range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
+                        }else{
+                            rangeInput[1].value = maxPrice;
+                            range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                        }
+                    }
+                });
+            });
+
+            rangeInput.forEach(input =>{
+                input.addEventListener("input", e =>{
+                    let minVal = parseInt(rangeInput[0].value),
+                    maxVal = parseInt(rangeInput[1].value);
+
+                    if((maxVal - minVal) < priceGap){
+                        if(e.target.className === "range-min"){
+                            rangeInput[0].value = maxVal - priceGap
+                        }else{
+                            rangeInput[1].value = minVal + priceGap;
+                        }
+                    }else{
+                        priceInput[0].value = minVal;
+                        priceInput[1].value = maxVal;
+                        range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
+                        range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+                    }
+                });
+            });
+    </script>
+    <script>
+        $(".price_range").on('change',function(){
+            
+            var input_min = $('#input_min').val();
+            var input_max = $('#input_max').val();
+            var range_min = $('#range_min').val();
+            var range_max = $('#range_max').val();
+      
+            
+            $.ajax({
+                
+                url : "{% url 'filter_by_price_range' %}",
+                data : {
+                    input_min : input_min,
+                    input_max : input_max,
+                    range_min : range_min,
+                    range_max : range_max             
+                },
+                dataType: 'json',
+                success:function(rslt){
+                    
+                    $("#filteredProducts").html(rslt.data);
+                }
+            });
+        });
+
+    </script>
+    
+	{% endblock scripts %}

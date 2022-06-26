@@ -1,0 +1,45 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+<main class="main users chart-page" id="skip-target">
+    <div class="container">
+      <h2 class="Add Categories"></h2>
+      <form action="" method="post" id="add_cat_form"  enctype="multipart/form-data" autocomplete="off">
+        {% csrf_token %}
+        {{form|crispy}}
+        <label for="exp-date">Exp Date</label>
+        <input class="form-control form-control-lg py-1 rounded" type="date" label="Exp Date" name="exp-date" id="" />
+    </form>
+    <p class="lead p-2">
+        <div class="d-flex" style="justify-content: space-between;">
+            <div class="">
+                <button  id="add_cat_submit" class="btn btn-primary btn-lg "  >Submit</button>
+            </div>
+            <div class=" d-flex ">                      
+                <p class="p-1"></p>
+                <a href="{% url 'coupon_table'%}" class="btn btn-success ">Back to Table</a> 
+            </div>
+        </div>
+
+    </p>
+    <div class="yo">
+        {% for message in messages %}
+            <h3>{{message}}</h3>
+        {% endfor %}
+    </div>
+    </div>
+{% endblock content %}
+{% block scripts %}
+<script>
+
+    $('#add_cat_submit').on('click', function (){
+        
+        document.getElementById("add_cat_form").submit()
+        
+          
+    })
+</script>
+
+
+{% endblock scripts %}

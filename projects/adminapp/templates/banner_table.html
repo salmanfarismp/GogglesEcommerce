@@ -1,0 +1,120 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+{% load static %}
+<main class="main users chart-page" id="skip-target">
+    <div class="container">
+      <h2 class="main-title">Banner Table</h2>
+      <div class="row">
+        <div class="col-lg-11">
+            <div class="users-table table-wrapper">
+                <table class="posts-table">
+                  <thead>
+                    <tr class="users-table-info">
+                      <th>
+                        Id
+                      </th>
+                      <th>
+                        Image
+                    </th>
+                      <th>Name</th>
+                      <th>
+                          Header
+                      </th>
+                      <th>
+                        Description
+                    </th>
+                   
+                      <th>
+                      </th>
+                   
+                      <th>
+                        <a href="{% url 'banner_add' %}"><span class="badge-active m-1">Add New+</span></a>
+                      
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for banner in banners %}
+                    <tr>
+                      <td>
+                        
+                          {{banner.id}}
+                        
+                         
+                       
+                      </td>
+                      <td>
+                        <div class="categories-table-img">
+                          <img src="{{banner.banner_image.url}}" alt="">
+                        </div>
+                      </td>
+                      
+                      <td>
+                          {{banner.name}}
+                      </td>
+                      <td>
+                        {{banner.header}}
+                    </td>
+                    <td>
+                        {{banner.description}}
+                    </td>
+
+                      <td >
+                        <a href="{% url 'banner_update' banner.id %}"><span class="badge-pending m-1">Edit</span></a> 
+
+                      </td>
+                      <td >
+                        <button data-delete="{{banner.id}}" class="delete_banner" style="background: none;" ><span class="badge-trashed m-1" >Delete</span></button> 
+                        
+                      </td>
+                
+                      
+                      
+                    </tr>
+                   {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
+{% block scripts %}
+<script>
+
+  $('.delete_banner').on('click',function (e) {
+      var id = $(this).data('delete')
+      data = {
+          'id':id,
+      }
+      Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+              $.ajax({
+                  url: "/iamadmin/banner_delete",
+                  data: data,
+                  dataType:'json',
+                  success:function(res){
+                      Swal.fire(
+                          'Deleted!',
+                          'The Banner has been deleted.',
+                          'success'
+                      ).then((result) => {
+                        location.reload()
+                      })
+                  }
+              })
+              
+          }
+        })
+      
+  });
+</script>
+{% endblock scripts %}

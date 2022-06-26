@@ -1,0 +1,103 @@
+body{
+    margin: 0;
+    
+}
+
+.main-body{
+    height: 100vh;
+    background: #E0ECE4;
+}
+
+.form-container{
+    width:25rem;
+    height: 28rem;
+    background-color:  white;
+}
+
+.form-body{
+    padding: 0px 50px 20px 50px;
+}
+#myForm input{
+    border:none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.473);
+    background: transparent;
+    margin-top: 20px;
+}
+
+.loginBtn{
+    background-color: #66BFBF;
+    border: 2px solid #66BFBF;
+    color: white;
+}
+
+.loginBtn:hover{
+    background-color: transparent;
+    border: 2px solid #66BFBF;
+    color: #66BFBF;
+}
+.otpBtn{
+    background-color: #056674;
+    border: 2px solid #056674;
+    color: white;
+}
+
+.otpBtn:hover{
+    background-color: transparent;
+    border: 2px solid #056674;
+    color: #056674;
+}
+.form-control{
+    border:none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.473);
+    background: wheat;
+    
+
+}
+
+.form-control:focus{
+    outline: none;
+}
+
+#myForm input:focus{
+    outline: none;
+}
+::-webkit-input-placeholder { /* Edge */
+    color: rgba(0, 0, 0, 0.493);
+}
+.header-part{
+    height: 4rem;
+    
+}
+.back-btn{
+    color: black;
+    text-decoration: none;
+
+}
+.back-btn:hover{
+    color: #66BFBF;
+    
+}
+.brand{
+    color: #056674;
+    margin-left: 3rem;
+}
+.forgot-password{
+    text-decoration: none;
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.219);
+    display: flex;
+    justify-content: end;
+}
+.forgot-password:hover{
+    color: #66BFBF;
+}
+.signupq{
+    text-decoration: none;
+    font-size: 13px;
+}
+.signup{
+    text-decoration: none;
+}
+.input-group{
+    background-color: #66BFBF;
+}

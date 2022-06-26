@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+	<div class="row m-5">
+		<div class="col-lg-10">
+			<div class="box-element">
+
+				<a  id="just_key" style="font-size:1.5vw ;" class="btn btn-outline-dark" href="/">&#x2190; Continue Shopping</a>
+
+				<br>
+				<br>
+				<table class="table">
+					<tr>
+						<th><h5 style="font-size:2vw ;">Items: <strong id="items">{{order.get_cart_item}}</strong></h5></th>
+						<th><h5 style="font-size:2vw ;">Total:<strong > <i class="fas fa-rupee-sign"></i><span id="cart_total">{{order.get_cart_total}}</span></strong></h5></th>
+						<th>
+							{% if order.get_cart_total != 0 %}
+							<a  style="float:right; margin:5px; font-size:1.5vw ;" id="go_checkout" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+							<p  style="float:right; margin:5px; font-size:1.5vw ;" id="stay_checkout" class="btn btn-secondary">Checkout</p>
+							{% endif %}
+						</th>
+					</tr>
+				</table>
+
+			</div>
+
+			<br>
+			<div class="box-element">
+				<div class="cart-row">
+					<div style="flex:2"></div>
+					<div style="flex:2"><strong style="font-size:1.3vw ;" >Item</strong></div>
+					<div style="flex:1"><strong style="font-size:1.3vw ;" >Price</strong></div>
+					<div style="flex:1"><strong style="font-size:1.3vw ;" >Quantity</strong></div>
+					<div style="flex:1"><strong style="font-size:1.3vw ;" >Total</strong></div>
+					<div style="flex:1"><strong style="font-size:1.3vw ;" ></strong></div>
+				</div>
+				{% for item in items %}
+				<div class="cart-row" id="{{item.item_product.id}}">
+					<div style="flex:2"><img class="row-image" style="width:10vw" src="{{item.item_product.product_image.url}}"></div>
+					<div style="flex:2"><p style="font-size:1.5vw ;" >{{item.item_product.brand.brand_name}}</p></div>
+					<div style="flex:1"><p style="font-size:1.5vw ;" ><i class="fas fa-rupee-sign"></i>{{item.item_product.product_discount_price}}</p></div>
+					<div style="flex:1" class="d-flex ml-2" >
+						<p style="font-size:1.5vw ;" class="" id="quantity">{{item.item_quantity}}</p>
+						<div class="">
+							<img data-product="{{item.item_product.id}}" style="width:1vw" id="real-up" data-in_shop="false" data-action ="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}">	
+							<img data-product="{{item.item_product.id}}" style="width:1vw" data-action ="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
+						</div>
+						
+					</div>
+					<div style="flex:1"><p style="font-size:1.5vw ;" > <i class="fas fa-rupee-sign"></i><span id="total">{{item.get_total}}</span></p></div>
+					<div style="flex:1"> <button data-id="{{item.id}}" style="font-size:1.5vw ;"  class="btn btn-danger remove_from_cart"> Remove </button>
+						
+						{% if item.item_quantity > item.item_product.quantity_available %}
+						<p style="font-size:1.5vw ;" ><span id="out_of_stock" class="text-danger" >Out Of Stock</span></p>
+						{% endif %}
+						<p style="font-size:1.5vw ;"><span id="stockmsg" class="text-danger" >Out Of Stock</span></p>    
+						
+					
+					</div>
+					
+				</div>
+				{% endfor %}
+
+			</div>
+		</div>
+	</div>
+
+	
+
+
+	
+{% endblock content %}
+{% block scripts %}
+	<script>
+		$(document).ready(function () {
+			
+			var info = $('#out_of_stock').html()
+			if(info.length > 0){
+					
+				$('#go_checkout').hide()
+				$('#stay_checkout').show()
+			}
+		});
+	</script>
+    <script>
+
+        $('.remove_from_cart').on('click',function (e) {
+            var id = $(this).data('id')
+			console.log(id)
+            data = {
+                'id':id,
+            }
+			var flag = 0
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Remove it!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/remove_from_cart",
+                        data: data,
+                        dataType:'json',
+                        success:function(res){
+							Swal.fire(
+                                'Removed!',
+                                'Product has been successfully removed.',
+                                'success'
+                            ).then((result) => {
+								location.reload()
+
+							})  
+                        }
+                    })
+					
+						
+					
+                    
+                }
+              })
+            
+        });
+    </script>
+	
+{% endblock scripts %}

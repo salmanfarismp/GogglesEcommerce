@@ -1,0 +1,63 @@
+body{
+    margin: 0;
+    
+}
+
+.main-body{
+    height: fit-content;
+    background: #E0ECE4;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+.brand{
+    color: #056674;
+    margin-left: 3rem;
+}
+
+.form-container{
+    width:22rem;
+    height: fit-content ;
+    min-height: 60vh;
+    background-color:  white;
+}
+
+.form-body{
+    padding: 0px 50px 20px 50px;
+}
+#myForm input{
+    border:none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.473);
+    background: transparent;
+    margin-top: 20px;
+}
+
+.loginBtn{
+    background-color: #66BFBF;
+    border: 2px solid #66BFBF;
+    color: white;
+}
+
+.loginBtn:hover{
+    background-color: transparent;
+    border: 2px solid #66BFBF;
+    color: #66BFBF;
+}
+.otpBtn{
+    background-color: #056674;
+    border: 2px solid #056674;
+    color: white;
+}
+
+.otpBtn:hover{
+    background-color: transparent;
+    border: 2px solid #056674;
+    color: #056674;
+}
+.form-control{
+    border:none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.473);
+    background: wheat;
+    
+
+}

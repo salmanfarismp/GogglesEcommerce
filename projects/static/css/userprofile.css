@@ -1,0 +1,87 @@
+body{
+    border: 0;
+}
+.main-body{
+    height: inherit;
+}
+.content-body{
+    width: 60rem ;
+    height: inherit;
+    background: white;
+}
+ul{
+    list-style-type: none;
+}
+.nav-title{
+    height: 6rem;
+
+}
+.nav-btn a{
+    color: black;
+}
+.nav-btn{
+    height: 2rem;
+    width: 10rem;
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+.nav-btn:hover{
+    border: 1px solid #66BFBF;
+    margin: 1rem;
+
+}
+.nav-btn :hover{
+    color: #66BFBF;
+}
+.fields{
+    font-size: larger;
+}
+#current{
+    border: 1px solid #66BFBF;
+    margin: 1rem;
+}
+#current a{ 
+    color: #66BFBF;
+}
+.address-btn{
+    border: black solid 1px;
+    
+}
+.address-btn a{
+    color: black;
+}
+
+.address-btn:hover{
+    border: #01cd74 solid 1px;
+    
+    
+}
+.address-btn a:hover{
+    color: #01cd74;
+}
+.address-btn button{
+    background-color: transparent;
+    border: none;
+    color: black;
+    text-decoration: none;
+}
+.address-btn button:hover{
+
+    background-color: transparent; /* Green */
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+.address-btn button:active, button:focus{
+    outline: none;
+    color: #01cd74;
+}
+
+
+
+
+

@@ -1,0 +1,150 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+{% load static %}
+<main class="main users chart-page" id="skip-target">
+    <div class="container">
+      <h2 class="main-title">Products Table</h2>
+      <div class="row">
+        <div class="col-lg-11">
+            <div class="users-table table-wrapper">
+                <table class="posts-table">
+                  <thead>
+                    <tr class="users-table-info">
+                      <th>
+                        Id
+                      </th>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>brand</th>
+                      <th>category</th>
+                      <th>Available</th>
+                      <th>
+                      </th>
+                     
+
+                      <th>
+                      </th>
+                      
+                      <th>
+                      </th>
+                      
+                      <th>
+                        <a href="{% url 'products_add' %}"><span class="badge-active m-1">Add New+</span></a>
+                      </th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for product in products %}
+                    <tr>
+                      <td>
+                    
+                        {{product.id}}
+                      </td>
+                      <td>
+                        <div class="categories-table-img">
+                          <img src="{{product.product_image.url}}" alt="">
+                        </div>
+                      </td>
+                      <td>
+                       {{product.product_name}}
+                      </td>
+                      <td>
+                        {{product.brand}}
+                       </td>
+                      <td>
+                        {{product.product_category}}
+                       </td>
+                       <td>{% if product.quantity_available == 0 %}
+                            <p class="text-danger">Out Of Stock</p>
+                            {% else %}
+                              {{product.quantity_available}}
+                              {% endif %}
+                       </td>
+                       <td>
+                        <a href="{% url 'products_view' product.id %}"><span class="badge-success m-1">View</span></a>
+                       </td>
+                       
+                       <td>
+                        
+                       </td>
+                      
+                      
+                      <td>
+                        <a href="{% url 'products_update' product.id %}"><span class="badge-pending m-1">Edit</span></a>
+
+                      </td>   
+                      <td>
+
+                        <button data-delete="{{product.id}}" class="delete_product" style="background: none;"><span class="badge-trashed m-1">Delete</span></button>
+                      </td>
+                      
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+              <div class="mt-1">
+                {% if products.has_previous %}
+                <a href="?pg=1">&laquo;First</a>
+                <a href="?pg={{products.previous_page_number}}">&laquo;Prev</a>
+              {% endif %}
+              </div>
+              <div class="m-1">
+                Page ({{products.number}} of {{products.paginator.num_pages}}) 
+              </div>
+              <div class="mt-1">
+                {% if products.has_next %}
+                <a href="?pg={{products.next_page_number}}"> Next&raquo; </a>
+                <a href="?pg={{products.paginator.num_pages}}"> Last&raquo;</a>
+              {% endif %}
+
+              </div>
+              
+    
+            </div>
+        </div>
+
+      </div>
+    </div>
+{% endblock content %}
+{% block scripts %}
+<script>
+
+  $('.delete_product').on('click',function (e) {
+      var id = $(this).data('delete')
+      data = {
+          'id':id,
+      }
+      Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+              $.ajax({
+                  url: "/iamadmin/products_delete",
+                  data: data,
+                  dataType:'json',
+                  success:function(res){
+                      Swal.fire(
+                          'Deleted!',
+                          'The Product been deleted.',
+                          'success'
+                      ).then((result) => {
+                        location.reload()
+                      })
+                  }
+              })
+              
+          }
+        })
+      
+  });
+</script>
+{% endblock scripts %}

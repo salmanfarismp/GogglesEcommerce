@@ -1,0 +1,67 @@
+from django.urls import path
+from unicodedata import name
+from . import views
+from django.contrib.auth import views as auth_views #import this
+
+urlpatterns = [
+    path('', views.home, name="home"),
+    path('load-more-data', views.load_more_data, name="load-more-data"),
+    path('signup', views.signup, name="signup"),
+    path('signup_otp_verify', views.signup_otp_verify, name="signup_otp_verify"),
+    path('resend_signup_otp', views.resend_signup_otp, name="resend_signup_otp"),
+    path('signin',views.signin, name="signin"),
+    path('signout',views.signout, name="signout"),
+    path('main_shop',views.main_shop, name="main_shop"),
+    path('search',views.search, name="search"),
+    path('main_orders',views.main_orders, name="main_orders"),
+    path('filter_category/<int:id>',views.filter_category, name="filter_category"),
+    path('filter-shop-products',views.filter_shop_products, name="filter_shop_products"),
+     path('filter-category-products',views.filter_category_products, name="filter_category_products"),
+    path('single/<int:id>',views.singleproduct, name="single"),
+    path('otp_login',views.otp_login, name="otp_login"),
+    path('otpverify',views.otpverify, name="otpverify"),
+    path('resend_otp',views.resend_otp, name="resend_otp"),
+    path('category',views.category, name="category"),
+    path('cart',views.cart, name="cart"),
+    path('wishlist',views.wishlist, name="wishlist"),
+    path('wishlistitem/<int:id>',views.wishlistitem, name="wishlistitem"),
+    path('remove_from_wishlist', views.remove_from_wishlist, name="remove_from_wishlist"),
+    path('make_wish', views.make_wish, name="make_wish"),
+    path('sortproducts', views.sortproducts, name="sortproducts"),
+    path('buynow/<int:id>', views.buynow, name="buynow"),
+    path('checkout',views.checkout, name="checkout"),
+    path('coupon_verify',views.coupon_verify, name="coupon_verify"),
+    path('removecoupon',views.removecoupon, name="removecoupon"),
+    path('update_item', views.updateitem, name="update_item"),
+    path('payment/<int:id>', views.payment, name="payment"),
+    path('filter_by_price_range', views.filter_by_price_range, name="filter_by_price_range"),
+
+    path('reset_password/',auth_views.PasswordResetView.as_view(template_name='user/password_reset_form.html'),name="reset_password"),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='user/password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='user/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='user/password_reset_complete.html'), name='password_reset_complete'),
+
+    path('proceed_cod', views.proceed_cod, name="proceed_cod"),
+    path('pay_razorpay', views.pay_razorpay, name="payrazorpay"),
+    path('order_by_razorpay', views.order_by_razorpay, name="order_by_razorpay"),
+    path('order_by_paypal', views.order_by_paypal, name="order_by_paypal"),
+
+    path('remove_from_cart', views.remove_from_cart, name="remove_from_cart"),
+    path('cancelorder/<int:id>', views.cancelorder, name="cancelorder"),
+    path('returnorder/<int:id>', views.returnorder, name="returnorder"),
+    #user profile paths
+    path('account', views.account , name="account"),
+    path('user_coupons', views.user_coupons , name="user_coupons"),
+    path('profile_order', views.profile_order , name="profile_order"),
+    path('invoice/<int:id>', views.invoice , name="invoice"),
+    path('profile_password', views.profile_password , name="profile_password"),
+    path('profile_shipping', views.profile_shipping , name="profile_shipping"),
+    path('delete_ship_address', views.delete_ship_address , name="delete_ship_address"),
+    path('addnewad', views.addnewad , name="addnewad"),
+    path('edit_shipping_ad/<int:id>', views.edit_shipping_ad , name="edit_shipping_ad"),
+    path('edit_address', views.edit_address , name="edit_address"),
+    path('change-password', views.MyPasswordChangeView.as_view() , name="password-change-view"),
+    path('done', views.MyPasswordResetDoneView.as_view() , name="password-change-done-view"),
+    path('<str:ref_code>', views.home, name="home"),
+]
+

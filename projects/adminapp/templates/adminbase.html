@@ -1,0 +1,229 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elegant Dashboard | Dashboard</title>
+  <!-- Favicon -->
+ 
+  {% block title %}
+
+  {% endblock title %}  
+
+  <link href="{% static 'css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+  <link rel="shortcut icon" href="{% static 'admin/img/svg/logo.svg' %}" type="image/x-icon">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="{% static 'admin/css/style.min.css' %}">
+  <link rel="stylesheet" href="{% static 'admin/css/admin.css' %}">
+  <link href="{% static 'css/fontawesome-all.css' %}" rel="stylesheet">
+  <link  href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
+
+    
+
+</head>
+
+<body>
+  <div class="layer"></div>
+<!-- ! Body -->
+<a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+<div class="page-flex">
+  <!-- ! Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-start">
+        <div class="sidebar-head">
+            <a href="{%url 'admin_home'%}" class="logo-wrapper" title="Home">
+                <span class="sr-only">Home</span>
+                <span class="icon logo" aria-hidden="true"></span>
+                <div class="logo-text">
+                    <span class="logo-title">Elegant</span>
+                    <span class="logo-subtitle">Dashboard</span>
+                </div>
+
+            </a>
+            <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+                <span class="sr-only">Toggle menu</span>
+                <span class="icon menu-toggle" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="sidebar-body">
+            <ul class="sidebar-body-menu">
+                <li>
+                    <a class="{% if page == 'dashboard' %} active {% endif %}" href="{%url 'admin_home'%}">Dashboard</a>
+                </li>
+                <li>
+                  <a class="{% if page == 'userpage' %} active {% endif %}"  href="{%url 'users_table'%}">Users Management</a> 
+                </li>
+                <li>
+                    <a class="{% if page == 'categorypage' %} active {% endif %}" href="{%url 'categories_table'%}">Categories Management </a>
+                </li>
+                <li>
+                  <a class="{% if page == 'brandpage' %} active {% endif %}" href="{%url 'brand_table'%}">Brands Management </a>
+              </li>
+                <li>
+                    <a class="{% if page == 'productpage' %} active {% endif %}" href="{%url 'products_table'%}">Product Management</a>
+                </li>
+                <li>
+                  <a class="{% if page == 'orderpage' %} active {% endif %}" href="{%url 'order_table'%}">Order Management</a>
+              </li>
+              <li>
+                <a  class="{% if page == 'salesreport' %} active {% endif %}" href="{%url 'sales_report'%}">Sales Reports</a>
+            </li>
+              <li>
+                <a class="{% if page == 'bannerpage' %} active {% endif %}" href="{%url 'banner_table'%}">Banner Management</a>
+            </li>
+            <li>
+              <a class="show-cat-btn {% if page == 'categoryofferpage' or page == 'productofferpage' %} active {% endif %}" href="##">
+                  <span class="" aria-hidden="true"></span>Offer Management
+                  <span class="category__btn transparent-btn" title="Open list">
+                      <span class="sr-only">Open list</span>
+                      <span class="icon arrow-down" aria-hidden="true"></span>
+                  </span>
+              </a>
+              <ul class="cat-sub-menu">
+                  <li>
+                      <a class="{% if page == 'categoryofferpage' %} active {% endif %}" href="{%url 'category_offers'%}">Category Offers</a>
+                  </li>
+                  <li>
+                      <a class="{% if page == 'productofferpage' %} active {% endif %}" href="{%url 'product_offers' %}">Product Offers</a>
+                  </li>
+              </ul>
+          </li>
+            <li>
+              <a class="show-cat-btn {% if page == 'couponcreatepage' or page == 'couponusepage' %} active {% endif %}" href="##">
+                  <span class="" aria-hidden="true"></span>Coupon Management
+                  <span class="category__btn transparent-btn" title="Open list">
+                      <span class="sr-only">Open list</span>
+                      <span class="icon arrow-down" aria-hidden="true"></span>
+                  </span>
+              </a>
+              <ul class="cat-sub-menu">
+                  <li>
+                      <a class="{% if page == 'couponcreatepage' %} active {% endif %}" href="{%url 'coupon_table'%}">Coupons</a>
+                  </li>
+                  <li>
+                      <a class="{% if page == 'couponusepage' %} active {% endif %}" href="{%url 'coupon_usage' %}">Coupon Usage</a>
+                  </li>
+              </ul>
+          </li>
+            </ul>
+        </div>
+    </div>
+    <div class="sidebar-footer">
+        <a href="##" class="sidebar-user">
+            <span class="sidebar-user-img">
+                <picture><source srcset="{% static 'admin/img/avatar/avatar-illustrated-01.webp' %}" type="image/webp"><img src="{% static 'admin/img/avatar/avatar-illustrated-01.png' %}" alt="User name"></picture>
+            </span>
+            <div class="sidebar-user-info">
+                <span class="sidebar-user__title">salman</span>
+                <span class="sidebar-user__subtitle">Only admin</span>
+            </div>
+        </a>
+    </div>
+</aside>
+<div class="main-wrapper">
+    <!-- ! Main nav -->
+    <nav class="main-nav--bg">
+  <div class="container main-nav">
+    <div class="main-nav-start">
+      {% if page != 'dashboard' %}
+      <div class="search-wrapper" style="width: fit-content;">
+        <i data-feather="search" aria-hidden="true"></i>
+        <form action="{% url 'admin_search' %}" class="search-model-form d-flex" method="GET">
+          <input type="text" name="keyword" id="search-input" placeholder="Enter keywords ..." required>
+          <input class="d-none"  name="page" value="{{page}}" >
+          <button type="submit" class="ml-1 btn btn-primary">Search</button>
+        </form>
+        
+      </div>
+      {% endif %}
+    </div>
+    <div class="main-nav-end">
+      <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+        <span class="sr-only">Toggle menu</span>
+        <span class="icon menu-toggle--gray" aria-hidden="true"></span>
+      </button>
+      
+      <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
+        <span class="sr-only">Switch theme</span>
+        <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
+        <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
+      </button>
+      
+      <div class="nav-user-wrapper">
+        <button href="##" class="nav-user-btn dropdown-btn" title="My profile" type="button">
+          <span class="sr-only">My profile</span>
+          <span class="nav-user-img">
+            <picture><source srcset="{% static 'admin/img/avatar/avatar-illustrated-02.webp' %}" type="image/webp"><img src="{% static 'admin/img/avatar/avatar-illustrated-02.png' %}" alt="User name"></picture>
+          </span>
+        </button>
+        <ul class="users-item-dropdown nav-user-dropdown dropdown">
+          <!-- <li><a href="##">
+              <i data-feather="user" aria-hidden="true"></i>
+              <span>Profile</span>
+            </a></li>
+          <li><a href="##">
+              <i data-feather="settings" aria-hidden="true"></i>
+              <span>Account settings</span>
+            </a></li> -->
+          <li><button class="danger logout_button text-danger" style="background: none; text-decoration: none" >
+              <i data-feather="log-out" aria-hidden="true"></i>
+              <span  >Log out</span>
+            </button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+    <!-- ! Main -->
+
+    {% block content %}
+    {% endblock content %}
+    <!-- ! Footer -->
+    
+  </div>
+</div>
+<!-- Chart library -->
+<script src="{% static 'admin/plugins/chart.min.js '%}"></script>
+<!-- Icons library -->
+<script src="{% static 'admin/plugins/feather.min.js'%}"></script>
+<!-- Custom scripts -->
+<script src="{% static 'admin/js/script.js'%}"></script>
+<script src="{% static 'admin/js/cropimg.js'%}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.all.min.js"></script>
+<script src="sweetalert2.all.min.js"></script>
+
+        <script>
+            $('.logout_button').on('click',function (e) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "",
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Log Out'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'admin_logout';
+                        
+                    }
+                  })
+                
+            });
+
+
+
+
+        </script>
+{% block scripts %}
+{% endblock scripts %}
+</body>
+
+</html>

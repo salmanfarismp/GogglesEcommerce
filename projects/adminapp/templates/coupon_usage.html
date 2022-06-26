@@ -1,0 +1,50 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+{% load static %}
+<main class="main users chart-page" id="skip-target">
+    <div class="container">
+      <h2 class="main-title">Coupon Usage</h2>
+      <div class="row">
+        <div class="col-lg-11">
+            <div class="users-table table-wrapper">
+                <table class="posts-table">
+                  <thead>
+                    <tr class="users-table-info">
+                      <th>
+                        Id
+                      </th>
+                      <th>User</th>
+                      <th>Coupon</th>
+                      <th>Order</th>
+                      <th>Money Saved</th>   
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for coupon in coupons %}  
+                    <tr id="{{coupon.id}}">
+                      <td>
+                       
+                            {{coupon.id}}
+                         
+                      </td>
+                      <td>
+                        {{coupon.user}}
+                      </td>
+                      <td>
+                        {{coupon.coupon.name}}
+                      </td>
+                      <td>
+                        {{coupon.fororder}}
+                      </td>
+                      <td>
+                        {{coupon.lessed_money}}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

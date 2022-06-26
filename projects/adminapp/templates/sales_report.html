@@ -1,0 +1,195 @@
+{% extends 'adminbase.html' %}
+
+
+{%block title %}
+
+  {% endblock title %}
+{% block content %}
+{% load static %}
+<div class="" >
+  <h2 class="main-title m-2 ">Sales Table</h2>
+<form action="{% url 'sales_report' %}" method="GET">
+    <div class="row m-1 stat-cards">
+      <div class=" col-xl-4 mb-1 " >
+        <article class="stat-cards-item " >
+          
+
+          <div class="stat-cards-info " style="width: 100%;" >
+            <p class="stat-cards-info__num"><input type="text" class="ms-2" name="dates"  /></p>
+            <p class="stat-cards-info__title">SelectBy Range:</p>
+            <div class="d-flex " style="justify-content: space-between;">
+              <button class="btn btn-primary m-1" style="width: 30%;" id="submit_date" type="submit">OK</button>
+              <a class="btn btn-danger m-1" style="width: 30%;" href="{% url 'sales_report' %}">RESET</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class=" col-xl-4 mb-1" >
+        <article class="stat-cards-item">
+          
+          <div class="stat-cards-info" style="width: 100%;"  >
+            <p class="stat-cards-info__num"><select name="month" id="">
+              <option value="">---------</option>
+              {% for month in months %}
+              <option value="{{ forloop.counter }}">{{ month }}</option>
+              {% endfor %}
+            </select></p>
+            <p class="stat-cards-info__title">Select By Month :</p>
+            <div class="d-flex " style="justify-content: space-between;">
+              <button class="btn btn-primary m-1" style="width: 30%;" id="submit_date" type="submit">OK</button>
+              <a class="btn btn-danger m-1" style="width: 30%;" href="{% url 'sales_report' %}">RESET</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class=" col-xl-4 mb-1"  >
+        <article class="stat-cards-item"  >
+          
+          <div class="stat-cards-info" style="width: 100%;">
+            <p class="stat-cards-info__num"><select name="year" id="">
+              <option value="">---------</option>
+              {% for year in years %}
+              <option value="{{ year }}">{{ year }}</option>
+              {% endfor %}
+            </select></p>
+            <p class="stat-cards-info__title">Select By Year :</p>
+            <div class="d-flex " style="justify-content: space-between;">
+              <button class="btn btn-primary m-1" style="width: 30%;" id="submit_date" type="submit">OK</button>
+              <a class="btn btn-danger m-1" style="width: 30%;" href="{% url 'sales_report' %}">RESET</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+    
+    
+      
+   
+    
+    
+</form>
+
+</div>
+
+<main class="main users chart-page" id="skip-target">
+  <div class="container ">
+   
+    {% if note == 'NoResult' %}
+    <img style="width: 100%;"src="{% static  'images/NoSearchResult.png' %}">
+    {% else %}
+      <div class="row" id="salestable" >
+
+      <div class="col-lg-12" >
+          <div class="users-table table-wrapper"  >
+            
+            <div   >
+
+            
+              <table class="posts-table  " >
+                <thead >
+                  <tr class="users-table-info">
+                    <th class="">
+                      
+                      User Id
+                      
+                    </th>
+                    <th>Customer Name</th>
+                    <th>Number of Products</th>
+                    <th>Ordered Date</th>
+                    <th>Amount</th>
+                    <th>Payment Type</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for data in order_data %}
+                  
+                  <tr>
+                    <td>
+                      
+                        {{data.id}}
+                      
+                      
+                      
+                    </td>
+                    <td>
+                      {{data.order_customer}}
+                    </td>
+                    <td>
+                      {{data.get_cart_item}}
+                    </td>
+                    <td>
+                      {{data.order_date}}
+                    </td>
+                    <td>
+                      {{data.payment.total_amount}}
+                    </td>
+                    <td>
+                      {{data.payment.payment_method}}
+                    </td>
+                    
+                    
+                    
+                  </tr>
+                  
+                {% endfor %}
+                </tbody>
+              </table>
+            </div> 
+          </div>
+      </div>
+    
+    
+    
+    
+    </div>
+    <div class="row m-1 "> 
+      <div class="col-lg-4 mb-2" >
+          <a href="{% url 'export_csv' %}" style="width: 100%;" class="btn btn-secondary">Export CSV</a>
+      </div>
+      <div class="col-lg-4 mb-2">
+        <a href="{% url 'export_excel' %}" style="width: 100%;" class="btn btn-secondary">Export Excel</a>
+      </div>
+      <div class="col-lg-4  mb-2">
+      <button id="topdf" style="width: 100%;" class="btn bg-secondary btn-secondary">Export PDF</button>
+    </div>
+    {% endif %}
+  </div>
+  </div>
+</main>
+
+
+<script src="{% static 'admin/js/html2pdf.bundle.js' %}"></script>
+<script type="text/javascript">
+  document.getElementById('topdf').onclick = function () {
+      var element = document.getElementById('salestable');
+      html2pdf(element, {
+          margin: 10,
+          filename: 'SalesReport.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      });
+  };
+</script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<script>
+    $('input[name="dates"]').daterangepicker({
+      maxDate: moment(),
+      ignoreReadonly: true,
+      format:'dd/mm/yyyy',
+      allowInputToggle: true,
+      defaultDate: false,
+      useCurrent: false
+    }
+  );
+</script>
+
+
+{% endblock content %}
+

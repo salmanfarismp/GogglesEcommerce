@@ -1,0 +1,32 @@
+.categories_dropdown{
+    position: relative;
+}
+.cat_link{
+    border: none;
+    margin: 0;
+    background: none;
+}
+.cat_link:focus{
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.5);
+}
+.categories_content{
+    opacity: 0;
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    background: white;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.1);
+    transform: translateY(-10px);
+    transition: opacity 150ms ease-in-out;
+    pointer-events: none;
+}
+.categories_dropdown.active_now .cat_link+ .categories_content{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+a {
+    color: black;
+}

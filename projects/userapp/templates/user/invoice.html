@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+<style>
+    body{
+        margin-top:10px;
+        background:#eee;    
+    }
+</style>
+{% endblock title %}
+{% block content %}
+{% load static %}
+
+<div class="container mb-4  box-element mx-auto"   style="width: fit-content;"> 
+    <div class="row invoice row-printable mx-auto" >
+        <div class="m-1" id="invoice_page"  >
+            <!-- col-lg-12 start here -->
+            <div class="panel panel-default plain" id="dash_0">
+                <!-- Start .panel -->
+                <div class="panel-body p30">
+                    <div class="row">
+                        <!-- Start .row -->
+                        <div class="col-lg-6">
+                            <!-- col-lg-6 start here -->
+                            <div class=" logo-w3layouts">
+                                <h1 class="logo-w3layouts">
+                                    <a class="navbar-brand " style="font-size: large;" href="{% url 'home' %}">
+                                        Goggles </a>
+                                </h1>
+                            </div>
+                        </div>
+                        <!-- col-lg-6 end here -->
+                        <div class="col-lg-6"  >
+     
+                            <!-- col-lg-6 start here -->
+                            <div class="invoice-from">
+                                <ul class="list-unstyled text-right">
+                                    <li><strong>Billing Address :</strong></li>
+                                    <li>{{user.first_name}} {{user.last_name}}</li>
+                                    <li>username : {{user.username}}</li>
+                                    <li>{{user.email}}</li>
+                                    <li>{{user.phone_number}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- col-lg-6 end here -->
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="invoice-details mt25">
+                                        <div class="well">
+                                            <ul class="list-unstyled mb0">
+                                                <li><strong>Order Id :</strong>{{order.id}}</li>
+                                                <li><strong>Order Date:</strong>{{order.order_date}}</li>
+                                                <li><strong>payment method :</strong>{{order.payment.payment_method}} </li>
+                                                <li><strong>Payment Status:</strong> {{order.payment.payment_status}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="invoice-to text-right mt25">
+                                        <ul class="list-unstyled">
+                                            <li><strong>Shipping Address :</strong></li>
+                                            <li>{{order.order_address.full_name}}</li>
+                                            <li>{{order.order_address.phone_number}}</li>
+                                            <li>{{order.order_address.pincode}}</li>
+                                            <li>{{order.order_address.locality_address}}</li>
+                                            <li>{{order.order_address.city_district}}</li>
+                                            <li>{{order.order_address.state}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- col-lg-12 start here -->
+                           
+                            <div class="invoice-items">
+                                <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="per70 text-center">Description</th>
+                                                <th class="per5 text-center">Qty</th>
+                                                <th class="per25 text-center">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in items %}
+                                            <tr>
+                                            <td>{{item.item_product.product_name}} {{item.item_product.brand}} </td>
+                                                <td class="text-center">{{item.item_quantity}}</td>
+                                                <td class="text-center"><i class="fas fa-rupee-sign"></i>{{item.get_total}}.00</td>
+                                            </tr>
+                                           {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="2" class="text-right">Sub Total:</th>
+                                                <th class="text-center"><i class="fas fa-rupee-sign"></i>{{order.get_cart_total}}.00</th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2" class="text-right">GST:</th>
+                                                <th class="text-center text-success"><i class="fas fa-rupee-sign"></i>0</th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2" class="text-right">Shipping Charge:</th>
+                                                <th class="text-center text-success"><i class="fas fa-rupee-sign"></i>0</th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2" class="text-right">Total:</th>
+                                                <th class="text-center"><i class="fas fa-rupee-sign"></i>{{order.get_cart_total}}.00</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <!-- col-lg-12 end here -->
+                    </div>
+                    <!-- End .row -->
+                </div>
+            </div>
+            <!-- End .panel -->
+        </div>
+        <!-- col-lg-12 end here -->
+    </div>
+    <hr>
+    <p class="text-center">Generated on {{order.order_date}} <a href="javascript:generatePDF()" id="topdf" class="btn btn-secondary"><i class="fa fa-print "></i>Print</a></p>
+
+    
+</div>
+
+    
+
+
+{% endblock content %}
+{% block scripts%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js" ></script>
+<!-- <script>
+
+  document.getElementById('topdf').onclick = function() {
+    var element = document.getElementById('invoice_page');
+    var date = new Date().toISOString().slice(0,19);
+    var opt = {
+      margin:     1,
+      filename: 'Invoice' +date + '.pdf',
+      image: { type: 'jpeg', quality: 0.98},
+      html2canvas: { scale: 2},
+      jsPDF: { unit: 'pt', format: 'letter', orientation: 'portrait'}
+
+    }
+    
+    html2pdf(element, opt)
+
+  };
+</script> -->
+<script>
+    async function generatePDF() {
+        document.getElementById("topdf").innerHTML = "Please wait";
+
+        //Downloading
+        var element = document.getElementById('invoice_page');
+        var doc = new jsPDF('l', 'pt');
+
+        await html2canvas(element, {
+            //allowTaint: true,
+            //useCORS: true,
+            width: 530
+        }).then((canvas) => {
+            //Canvas (convert to PNG)
+            doc.addImage(canvas.toDataURL("image/png"), 'PNG',5, 5, 800, 800);
+        })
+
+        doc.save("Document.pdf");
+
+        //End of downloading
+
+        document.getElementById("topdf").innerHTML = "Print";
+    }
+</script>
+{% endblock scripts %}

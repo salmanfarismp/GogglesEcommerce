@@ -1,0 +1,236 @@
+<!--
+	Author: W3layouts
+	Author URL: http://w3layouts.com
+	License: Creative Commons Attribution 3.0 Unported
+	License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+		<!-- //header -->
+		<!-- banner -->
+		<div class="banner">
+			<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+				<ol class="carousel-indicators">
+					{% for banner in banners %}
+					<li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first  %} active {% endif %}"></li>
+					{% endfor %}
+				</ol>
+				<div class="carousel-inner" role="listbox">
+					{% for banner in banners %}
+					<div id="{{banner.id}}" class="carousel-item {% if forloop.first  %} active {% endif %} " style="background-image: url({{banner.banner_image.url}});">
+						<div class="carousel-caption text-center">
+							<h3>{{banner.header}}
+								<span>{{banner.description}}</span>
+							</h3>
+							<a href="{% url 'main_shop' %}" class="btn btn-sm animated-button gibson-three mt-4">Shop Now</a>
+						</div>
+					</div>
+					{% endfor %}
+					
+				</div>
+				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
+			<!--//banner -->
+		</div>
+	</div>
+	<!--//banner-sec-->
+	<section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+		<div class="container-fluid">
+			<div class="inner-sec-shop px-lg-4 px-3">
+				<h3 class="tittle-w3layouts my-lg-4 my-4">Features Products</h3>
+				<div class="row" id="filteredProducts">
+					<!-- /womens -->
+					{% for product in featured_products %}
+					<div id="{{product.id}}" class="col-md-3 product-men wished{{product.id}} women_two product-box ">
+						<div class="product-googles-info googles">
+							<div class="men-pro-item">
+								<div class="men-thumb-item">
+									<img src="{{product.product_image.url}}" class="img-fluid" alt="">
+									<div class="men-cart-pro">
+										<div class="inner-men-cart-pro">
+											<a href="{% url 'single' product.id %}" class="link-product-add-cart">Quick View</a>
+										</div>
+									</div>
+									<span class="" style="position: absolute; top: 0; right: 0;">
+										
+										<div class="{% if product.id not in wishes %}d-none{% endif %}" id="add_wish">
+											<button class="btn wish " style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="remove" >
+												<i class="fas fa-heart text-danger "></i>
+											</button>
+										</div>
+										
+										<div class="{% if product.id in wishes %}d-none{% endif %}" id="remove_wish">
+											<button class="btn wish" style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="add" >
+												<i class="far fa-heart"></i> 
+											</button> 
+										</div>	    
+										 
+									</span>
+								</div>
+								<div class="item-info-product bg-light">
+									<div class="info-product-price">
+										<div class="">
+											<div class="product_price">
+												<h4>
+													<a href="{% url 'single' product.id %}">{{product.brand.brand_name}}</a>
+												</h4>
+												<div class="grid-price mt-2">
+													<span class="money "><i class="fas fa-rupee-sign"></i>{{product.product_discount_price}}</span>
+													<span class="money "><del><i class="fas fa-rupee-sign"></i>{{product.product_price}}</del></span>
+													<p><span id="stockmsg2" class="text-danger" >Out Of Stock</span></p>
+													{% if product.quantity_available == 0 %}
+													<p><span class="text-danger" >Out Of Stock</span></p>
+													{% endif %}
+												</div>
+											</div>
+											<div class="d-flex">
+												{% if product.quantity_available != 0 %}
+												<a data-product="{{product.id}}" data-in_shop="true" data-action="add" class="update-cart add-btn btn m-1 bg-light">Add to Cart<i class="fas fa-cart-plus"></i></a>
+												<a href="{% url 'buynow' product.id %}" class=" add-btn btn m-1 bg-light">Buy Now<ion-icon class="text-danger" name="flash-outline"></ion-icon></a>
+												{% endif %}
+											</div>
+						
+										</div>
+										
+										
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+					
+					<!-- /mens -->
+				</div>
+				<div class="pagination">
+					
+					{% if featured_products.has_previous %}
+						<a href="?pg=1">&laquo;First</a>
+						<a href="?pg={{featured_products.previous_page_number}}">&laquo;Prev</a>
+					{% endif %}
+					Page ({{featured_products.number}} of {{featured_products.paginator.num_pages}}) 
+					{% if featured_products.has_next %}
+						<a href="?pg={{featured_products.next_page_number}}"> Next&raquo; </a>
+						<a href="?pg={{featured_products.paginator.num_pages}}"> Last&raquo;</a>
+					{% endif %}
+
+				</div>
+								<!--//row-->
+				<!--/meddle-->
+				<!--//meddle-->
+				<!--/slide-->
+				<h3 class="tittle-w3layouts my-lg-4 my-4">New Arrivals for you </h3>
+				<div class="slider-img mid-sec">
+					<!--//banner-sec-->
+					<div class="mid-slider  ">
+						<div class="owl-carousel owl-theme row" >
+							{% for product in products %}
+							<div class="items wished{{product.id}} " >
+								<div class="gd-box-info text-center">
+									<div class="product-men women_two bot-gd">
+										<div class="product-googles-info slide-img googles">
+											<div class="men-pro-item">
+												<div class="men-thumb-item">
+													<img src="{{product.product_image.url}}" class="img-fluid" alt="">
+													<div class="men-cart-pro">
+														<div class="inner-men-cart-pro">
+															<a href="{% url 'single' product.id %}" class="link-product-add-cart">Quick View</a>
+														</div>
+													</div>
+													<span class="" style="position: absolute; top: 0; right: 0;">
+										
+														<div class="{% if product.id not in wishes %}d-none{% endif %}" id="add_wish">
+															<button class="btn wish " style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="remove" >
+																<i class="fas fa-heart text-danger "></i>
+															</button>
+														</div>
+														
+														<div class="{% if product.id in wishes %}d-none{% endif %}" id="remove_wish">
+															<button class="btn wish" style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="add" >
+																<i class="far fa-heart"></i> 
+															</button> 
+														</div>	    
+														 
+													</span>
+													<!-- <span class="product-new-top">New</span> -->
+												</div>
+												<div class="item-info-product ">
+
+													<div class="info-product-price">
+														<div class="">
+															<div class="product_price">
+																<h4>
+																	<a href="{% url 'single' product.id %}">{{product.brand.brand_name}}</a>
+																</h4>
+																<div class="grid-price mt-2">
+																	{% if product.product_category.c_offer.percent == Null and product.p_offer.percent == Null %}
+																	<span class="money "><i class="fas fa-rupee-sign"></i>{{product.product_price}}</span>
+																	{% else %}
+																	<span class="money "><i class="fas fa-rupee-sign"></i>{{product.product_discount_price}}</span>
+																	<span class="money "><del><i class="fas fa-rupee-sign"></i>{{product.product_price}}</del></span>
+																	{% endif %}
+																	<p><span id="stockmsg2" class="text-danger" >Out Of Stock</span></p>
+																	{% if product.quantity_available == 0 %}
+																	<p><span class="text-danger" >Out Of Stock</span></p>
+																	{% endif %}
+			
+																</div>
+															</div>
+															<div class="d-flex">
+																{% if product.quantity_available != 0 %}
+																<a data-product="{{product.id}}" data-in_shop="true" data-action="add" class="update-cart add-btn btn m-1 bg-light">Add to Cart<i class="fas fa-cart-plus"></i></a>
+																<a href="{% url 'buynow' product.id %}" class=" add-btn btn m-1 bg-light">Buy Now<ion-icon class="text-danger" name="flash-outline"></ion-icon></a>
+																{% endif %}
+															</div>
+										
+														</div>
+														
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+				<div class="row galsses-grids pt-lg-5 pt-3">
+					{% for category in categories %}
+                               
+                
+					<div class="col-lg-12 p-1 galsses-grid-left">
+						<figure class="effect-lexi">
+							<img src="{{category.category_img.url}}" alt="{{category.category_name}}" class="img-fluid">
+							<figcaption>
+								<h3 style="text-shadow: 2px 2px 2px grey;" >
+									<span>Pick Your</span>
+									{{category.category_name}}
+									
+								</h3>
+								 <p><a href="{% url 'filter_category' category.id %}" style="color: #fff;">SHOP NOW</a></p>
+							</figcaption>
+						</figure>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- about -->
+	<!--footer -->
+	
+	{% endblock content %}
+	

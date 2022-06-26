@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="container d-flex" style="justify-content: center;">
+    <div class="main-body m-4 d-flex" style="justify-content: center; flex-direction: column;">
+
+        <form action="" method="post">
+            {% csrf_token %}
+        <h1 >ORDER PLACED..</h1>
+        <button type="submit" class="btn btn-primary p-3 mt-4 ">Back to Home</button>
+        </form>
+
+    </div>
+    
+
+</div>     
+    
+{% endblock content %}

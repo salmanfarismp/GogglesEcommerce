@@ -1,0 +1,100 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+{% load static %}
+<main>
+    <div class="container m-3" style="width: 80%;">
+        <div class="row">
+            <div class="  col-lg-6">
+                <div class="bg-light img-container m-2" style="width: 100%;">
+                    <img src="{{product.product_image.url}}" class="img-fluid" alt="">
+                </div>
+                <div class="bg-light m-2 " style="width: 100%;">
+                    <div class="mx-auto d-flex p-name" style="justify-content: space-between;">
+                        <h2 class=" p-3 text-muted">
+                           {{product.product_name}}
+                        </h2>
+                        <a href="{% url 'products_update' product.id %}"><span class="badge-pending m-1">Edit</span></a>
+
+                    </div>
+                    <div class=" p-3 text-muted">
+                        <p class="mb-2 text-dark">Category:</p>
+                        <h4  class="p-2">
+                            {{product.product_category}}
+                        </h4>
+                    </div>
+                    
+                    
+                    <div class=" p-3 text-muted">
+                        <p class="mb-2 text-dark">description:</p>
+                        <h6  class="p-2">
+                            {{product.product_description}}
+                        </h6>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="bg-light row img-container m-2" style="width: 100%;">
+                    <div class="col-lg-6">
+                        <img src="{{product.product_img_left.url}}" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="{{product.product_img_right.url}}" class="img-fluid" alt="">
+                    </div>
+                   
+                </div>
+                <div class="bg-light m-2 " style="width: 100%;">
+                    
+                    <div class=" p-3 text-muted">
+                        <p class="mb-2 text-dark">Brand:</p>
+                        <h4  class="p-2" >
+                            {{product.brand.brand_name}}
+                        </h4>
+                    </div>
+                    <div class=" p-3 text-muted">
+                        <p class="mb-2 text-dark">Price:</p>
+                        <h6  class="p-2">
+                            {{product.product_price}}
+                        </h6>
+                    </div>
+                    {% if product.p_offer %}
+                    <div class=" p-3 text-muted">
+                        <p class="mb-2 text-dark">Offer:</p>
+                        <h6 class="p-2">
+                            {{product.p_offer.name}}
+                        </h6>
+                    </div>
+                    <div class=" p-3 text-muted">
+                        <p class="mb-2 text-dark">Discount Price:</p>
+                        <h6 class="p-2">
+                            {{product.product_discount_price}}
+                        </h6>
+                    </div>
+                    {% endif %}
+                    <div class=" p-3 text-muted">
+                        <p class="mb-2 text-dark">Quantity:</p>
+                        <h6 class="p-2">
+                            {{product.quantity_available}}
+                        </h6>
+                    </div>
+                    <div class=" p-3 text-muted">
+                        <p class="mb-2 text-dark">Gender:</p>
+                        <h6 class="p-2">
+                            {{product.gender}}
+                        </h6>
+                    </div>
+                    <div class=" p-3 text-muted">
+                        <p class="mb-2 text-dark">New:</p>
+                        <h6 class="p-2">
+                            {{product.new}}
+                        </h6>
+                    </div>
+                    
+                   
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

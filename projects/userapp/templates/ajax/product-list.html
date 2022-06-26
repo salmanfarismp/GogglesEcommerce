@@ -1,0 +1,173 @@
+
+{% for product in products %}
+<div id="{{product.id}}" class="col-md-4 mb-3 wished{{product.id}} product-men women_two product-box " style="height: 33%;">
+    <div class="product-googles-info googles">
+        <div class="men-pro-item">
+            <div class="men-thumb-item">
+                <img src="{{product.product_image.url}}" class="img-fluid" alt="">
+                <div class="men-cart-pro">
+                    <div class="inner-men-cart-pro">
+                        <a href="{% url 'single' product.id %}" class="link-product-add-cart">Quick View</a>
+                    </div>
+                </div>
+                <span class="" style="position: absolute; top: 0; right: 0;">
+										
+                    <div class="{% if product.id not in wishes %}d-none{% endif %}" id="add_wish">
+                        <button class="btn wish " style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="remove" >
+                            <i class="fas fa-heart text-danger "></i>
+                        </button>
+                    </div>
+                    
+                    <div class="{% if product.id in wishes %}d-none{% endif %}" id="remove_wish">
+                        <button class="btn wish" style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="add" >
+                            <i class="far fa-heart"></i> 
+                        </button> 
+                    </div>	    
+                     
+                </span>
+            </div>
+            <div class="item-info-product">
+                <div class="info-product-price">
+                    <div class="">
+                        <div class="product_price">
+                            <h4>
+                                <a href="{% url 'single' product.id %}">{{product.brand.brand_name}}</a>
+                            </h4>
+                            <div class="grid-price mt-2">
+                                {% if product.product_category.c_offer.percent == Null and product.p_offer.percent == Null %}
+                                <span class="money "><i class="fas fa-rupee-sign"></i>{{product.product_price}}</span>
+                                {% else %}
+                                <span class="money "><i class="fas fa-rupee-sign"></i>{{product.product_discount_price}}</span>
+                                <span class="money "><del><i class="fas fa-rupee-sign"></i>{{product.product_price}}</del></span>
+                                {% endif %}
+                                <p><span id="stockmsg2" class="text-danger" >Out Of Stock</span></p>
+                                {% if product.quantity_available == 0 %}
+                                <p><span class="text-danger" >Out Of Stock</span></p>
+                                {% endif %}
+                                
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            {% if product.quantity_available != 0 %}
+                            <a data-product="{{product.id}}" data-in_shop="true" data-action="add" class="update-cart add-btn btn m-1 bg-light">Add to Cart<i class="fas fa-cart-plus"></i></a>
+                            <a href="{% url 'buynow' product.id %}" class=" add-btn btn m-1 bg-light">Buy Now<ion-icon class="text-danger" name="flash-outline"></ion-icon></a>
+                            {% endif %}
+                        </div>
+    
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$('.update-cart').on('click',function (e) {
+var product = $(this).data('product')
+var action = $(this).data('action')
+var in_shop = $(this).data('in_shop')
+
+console.log(in_shop)
+console.log(product)
+console.log(action)
+    $.ajax({
+        url : "{% url 'update_item' %}",
+        data : {
+            productId : product,
+            action : action,
+            
+        },
+        dataType: 'json',
+        success:function(response){
+        var items = response.items
+        var quantity = response.quantity
+        var total = response.total
+        var cart_total = response.cart_total
+        var productId = response.productId
+        var cur_stock = response.cur_stock
+        var flag = response.flag
+
+        
+        
+
+        if (flag == 1) {
+            if (action != 'remove'){
+                $('#'+productId + ' #stockmsg').show();
+            }	
+        }else{
+            $('#'+productId + ' #stockmsg').hide();
+            $('#'+productId + ' #out_of_stock').hide();
+            $('#go_checkout').show()
+            $('#stay_checkout').hide()
+        }
+        if (flag == 1 && action == 'add') {
+            $('#' +productId + ' #stockmsg2').show();
+        }else if (flag == 0 && action == 'add'){
+            $('#'+productId + ' #stockmsg2').hide();
+            
+        }
+        if (flag == 0 && in_shop == true){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Item Added to Cart',
+                showConfirmButton: false,
+                timer: 1500
+                })
+
+        }
+
+        
+        var total_id = '#' + productId + " #total"
+        var item_id =  " #items"
+        var cart_total_id = " #cart_total"
+        var quantity_id = '#' + productId + " #quantity"
+        var cartcout = " #cart_count"
+        
+        $(total_id).html('$'+total)
+        $(item_id).html(items )
+        $(cart_total_id).html('$'+cart_total )
+        $(quantity_id).html(quantity)
+        $(cartcout).html(items)
+
+        
+        
+        
+        }
+    });
+});
+</script>
+<script>
+    $('.wish').on('click',function (e) {         
+    var product = $(this).data('id')
+    var action = $(this).data('action')
+      $.ajax({
+          
+          url : "{% url 'make_wish' %}",
+          data : {
+              productId : product,
+              action : action,
+              
+          },
+          dataType: 'json',
+          success:function(response){
+            
+            
+            if (action == 'remove'){
+
+                $('.wished'+product+' #remove_wish').removeClass("d-none");
+                $('.wished'+product+' #add_wish').addClass("d-none");
+                
+            }
+            else{
+                
+                $('.wished'+product+ ' #add_wish').removeClass("d-none");
+                $('.wished'+product+ ' #remove_wish').addClass("d-none");
+
+            }	
+          }
+      });
+    });
+    </script>

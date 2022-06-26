@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+    <div class="container d-flex justify-content-center mb-5" style=" height: fit-content;">
+        <div class="main-div box-element mb-2 " style="width: 80%;height: fit-content;">
+            <h4 style="font-size:2vw ;" >My Wishlist({{wishcount}})</h4> <hr>
+            {% for item in items %}
+            
+            <div class="cart-row" id="{{item.item_product.id}}">
+                <a style="flex:2" href="{% url 'wishlistitem' item.item_product.id %}">
+                <div ><img style="width:10vw" class="row-image" src="{{item.item_product.product_image.url}}"></div>
+                </a>
+                <div class=" d-flex flex-column" style="flex:2 "><h6 style="font-size:1.5vw ;" >
+                    <a style="flex:2" href="{% url 'wishlistitem' item.item_product.id %}">
+                    {{item.item_product.brand.brand_name}}({{item.item_product.product_name}})
+                </a>
+                </h6>
+                <p class="m-1" style="font-size:1.3vw ;" >{{item.item_product.product_description}}</p>
+                </div>
+                
+                <div style="flex:2"><p style="font-size:1.3vw ;">{{item.item_product.product_category}}</p></div>
+                <div style="flex:1"><p style="font-size:1.3vw ;"><i class="fas fa-rupee-sign"></i>{{item.item_product.product_discount_price}}</p></div>
+                
+                <div style="flex:1" >
+                     <button data-id="{{item.id}}" style="font-size:1.3vw ;"  class="btn btn-danger remove_from_wishlist"> Remove </button>
+     
+                </div>
+                
+            </div>
+            
+            {% endfor %}
+            
+        </div>
+    </div>
+{% endblock content %}
+{% block scripts %}
+    <script>
+
+        $('.remove_from_wishlist').on('click',function (e) {
+            var id = $(this).data('id')
+			console.log(id)
+            data = {
+                'id':id,
+            }
+			var flag = 0
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Remove it!'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/remove_from_wishlist",
+                        data: data,
+                        dataType:'json',
+                        success:function(res){
+							Swal.fire(
+                                'Removed!',
+                                'Product has been successfully removed.',
+                                'success'
+                            ).then((result) => {
+								location.reload()
+
+							})  
+                        }
+                    })
+					
+                    
+                }
+              })
+            
+        });
+    </script>
+{% endblock scripts %}

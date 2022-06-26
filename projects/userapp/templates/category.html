@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+    <div class="container-fluid">
+        <div class="inner-sec-shop px-lg-4 px-3">
+          
+            <div class="row " >
+                <div class="col-lg-3 side-bar ">
+                    <div class="search-hotel">
+                        <h3 class="agileits-sear-head d-none"  id="catId">{{cat.id}}</h3>
+                        <h3 class="agileits-sear-head ">{{cat}}</h3>
+                        <a href="{% url 'main_shop' %}" class="agileits-sear-head">&#8592; All Categories</a> 
+                    </div>              
+                   
+                    <div class="search-hotel">
+                        <h3 class="agileits-sear-head">Brands</h3> 
+                        <div class="cats d-flex flex-column">
+                        {% for brand in brands %}
+                        <ul>
+                            <li>
+                                <input class="filter-checkbox" data-filter="brand" value="{{brand.id}}" type="checkbox" />&nbsp;
+                            {{brand.brand_name}}
+                            </li>
+                        </ul>
+                            
+                        {% endfor %}
+                        </div> 
+                        
+                    </div>                 
+                    <!-- <div class="search-hotel">
+                        <h3 class="agileits-sear-head">Search Here..</h3>
+                        <form action="#" method="post">
+                                <input class="form-control" type="search" name="search" placeholder="Search here..." required="">
+                                <button class="btn1">
+                                        <i class="fas fa-search"></i>
+                                </button>
+                                <div class="clearfix"> </div>
+                            </form>
+                    </div> -->
+                    <!-- price range -->
+                    <!-- <div class="range">
+                        <h3 class="agileits-sear-head">Price range</h3>
+                        <ul class="dropdown-menu6">
+                            <li>
+                                <div id="slider-range"></div>
+                                <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
+                            </li>
+                        </ul>
+                    </div> -->
+                    <!-- //price range -->
+                    <!--preference -->
+                    
+                    <!-- // preference -->
+                    <!-- discounts -->
+                    <!-- <div class="left-side">
+                        <h3 class="agileits-sear-head">Discount</h3>
+                        <ul>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">5% or More</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">10% or More</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">20% or More</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">30% or More</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">50% or More</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">60% or More</span>
+                            </li>
+                        </ul>
+                    </div> -->
+                    <!-- //discounts -->
+                    <!-- reviews -->
+                    <!-- <div class="customer-rev left-side">
+                        <h3 class="agileits-sear-head">Customer Review</h3>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <span>5.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>4.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>3.5</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>3.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>2.5</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div> -->
+                </div>
+                <div class="col-lg-9 d-flex" >
+                    <div class="row" id="filteredProducts"  style="width: 100%; height:fit-content">
+                        <p class="ajaxLoader">Loading...</p>
+                        {% for product in products %}
+                        <div id="{{product.id}}" class="col-md-4 mb-3 wished{{product.id}} product-men women_two">
+                            <div class="product-googles-info googles">
+                                <div class="men-pro-item">
+                                    <div class="men-thumb-item">
+                                        <img src="{{product.product_image.url}}" class="img-fluid" alt="">
+                                        <div class="men-cart-pro">
+                                            <div class="inner-men-cart-pro">
+                                                <a href="{% url 'single' product.id %}" class="link-product-add-cart">Quick View</a>
+                                            </div>
+                                        </div>
+                                        <span class="" style="position: absolute; top: 0; right: 0;">
+										
+                                            <div class="{% if product.id not in wishes %}d-none{% endif %}" id="add_wish">
+                                                <button class="btn wish " style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="remove" >
+                                                    <i class="fas fa-heart text-danger "></i>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="{% if product.id in wishes %}d-none{% endif %}" id="remove_wish">
+                                                <button class="btn wish" style="background: none; border: none; text-decoration: none;"  data-id="{{product.id}}" data-action="add" >
+                                                    <i class="far fa-heart"></i> 
+                                                </button> 
+                                            </div>	    
+                                             
+                                        </span>
+                                    </div>
+                                    <div class="item-info-product">
+                                        <div class="info-product-price">
+                                            <div class="">
+                                                <div class="product_price">
+                                                    <h4>
+                                                        <a href="{% url 'single' product.id %}">{{product.brand.brand_name}}</a>
+                                                    </h4>
+                                                    <div class="grid-price mt-2">
+                                                        {% if product.product_category.c_offer.percent == Null and product.p_offer.percent == Null %}
+                                                        <span class="money "><i class="fas fa-rupee-sign"></i>{{product.product_price}}</span>
+                                                        {% else %}
+                                                        <span class="money "><i class="fas fa-rupee-sign"></i>{{product.product_discount_price}}</span>
+                                                        <span class="money "><del><i class="fas fa-rupee-sign"></i>{{product.product_price}}</del></span>
+                                                        {% endif %}
+                                                        <p><span id="stockmsg2" class="text-danger" >Out Of Stock</span></p>
+                                                        {% if product.quantity_available == 0 %}
+                                                        <p><span class="text-danger" >Out Of Stock</span></p>
+                                                        {% endif %}
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex">
+                                                    {% if product.quantity_available != 0 %}
+                                                    <a data-product="{{product.id}}" data-in_shop="true" data-action="add" class="update-cart add-btn btn m-1 bg-light">Add to Cart<i class="fas fa-cart-plus"></i></a>
+                                                    <a href="{% url 'buynow' product.id %}" class=" add-btn btn m-1 bg-light">Buy Now<ion-icon class="text-danger" name="flash-outline"></ion-icon></a>
+                                                    {% endif %}
+                                                </div>
+                            
+                                            </div>
+                                            
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                   
+                </div>
+                <!-- /womens -->
+               
+                <!-- /mens -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+{% block scripts%}
+<script src="{% static 'js/mainshop.js' %}"></script>
+<script src="{% static 'js/category_filter.js' %}"></script>
+{% endblock scripts %}

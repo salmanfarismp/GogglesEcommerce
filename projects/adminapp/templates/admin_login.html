@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elegant Dashboard | Sign In</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{% static 'admin/img/svg/logo.svg'%}" type="image/x-icon">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="{% static 'admin/css/style.min.css'%}">
+</head>
+
+<body>
+  <div class="layer"></div>
+<main class="page-center">
+  <article class="sign-up">
+    <h1 class="sign-up__title">Welcome back!</h1>
+    <p class="sign-up__subtitle">Sign in to your account to continue</p>
+    <form class="sign-up-form form" action="" method="post">
+      {% csrf_token %}
+      <label class="form-label-wrapper">
+        <p class="form-label">User Name</p>
+        <input class="form-input" type="text" name="username" placeholder="Enter your username" required>
+      </label>
+      <label class="form-label-wrapper">
+        <p class="form-label">Password</p>
+        <input class="form-input" type="password" name="password" placeholder="Enter your password" required>
+      </label>
+  
+     
+      <button type="submit" class="form-btn primary-default-btn transparent-btn">Sign in</button>
+      {% for message in messages %}
+                    <h3>{{message}}</h3>
+                    {% endfor %}
+    </form>
+    
+  </article>
+</main>
+<!-- Chart library -->
+<script src="{% static 'admin/plugins/chart.min.js'%}"></script>
+<!-- Icons library -->
+<script src="{% static 'admin/plugins/feather.min.js'%}"></script>
+<!-- Custom scripts -->
+<script src="{% static 'admin/js/script.js'%}"></script>
+</body>
+
+</html>

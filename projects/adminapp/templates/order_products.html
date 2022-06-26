@@ -1,0 +1,127 @@
+{% extends 'adminbase.html' %}
+{% block content %}
+{% load static %}
+
+<main class="main users chart-page" id="skip-target">
+    <div class="container">
+        <div class="d-flex" style="justify-content: space-between;">
+                <h2 class="main-title">Payment Status</h2>
+                <a  style=" margin:5px;" class="btn btn-success" href="{% url 'order_table' %}">Go Back</a>
+            </div>         
+      <div class="row">
+        <div class="">
+            <div class="users-table table-wrapper">
+                <table class="posts-table">
+                  <thead>
+                    <tr class="users-table-info">
+                      <th class="pl-3">                    
+                          Id
+                      </th>
+                      <th>Total</th>
+                      <th>Payment Method</th>
+                      <th>Status</th>
+                      <th>Transaction Id</th>
+                      <th>Order Status</th>
+                      <th>Update Order Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <tr>
+                      <td>
+                        
+                          {{order.payment.id}}
+                        
+                         
+                        
+                      </td>
+                      
+                      <td>
+                        {{order.payment.total_amount}}
+                      </td>
+                      <td>
+                        {{order.payment.payment_method}}
+                      </td>
+                      <td>
+                        {{order.payment.payment_status}}
+                      </td>
+                      <td>
+                        {{order.payment.transaction_id}}
+                      </td>  
+                      <td>
+                        {{order.order_status}}
+                      </td>
+                      <td>
+                        Update Order Status
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+            <br>
+            
+        </div>
+      </div>
+      <div class="row">
+        <div class="">
+          <h2 class="main-title ml-2">Ordered Items</h2>
+            <div class="users-table table-wrapper">
+                <table class="posts-table">
+                  <thead>
+                    <tr class="users-table-info">
+                      <th class="pl-3">                    
+                          Id
+                      </th>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Price</th>
+                      <th>Quantity</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in items %}
+                    <tr>
+                      <td>
+                        
+                          {{item.id}}
+                        
+                         
+                        
+                      </td>
+                      <td>
+                        
+                        <div class="categories-table-img">
+                            <img src="{{item.item_product.product_image.url}}" alt="">
+                        </div>
+                      </td>
+                      <td>
+                        {{item.item_product.product_name}}
+                      </td>
+                      <td>
+                        {{item.item_product.product_price}}
+                      </td>
+                      <td>
+                        {{item.item_quantity}}
+                      </td>
+                      <td>
+                        {{item.get_total}}
+                      </td>  
+                    </tr>
+                   {% endfor %}
+                  </tbody>
+                </table>
+                <table class="table">
+                  <tr>
+                      <th><h5 class="main-title">Items: <strong>{{order.get_cart_item}}</strong></h5></th>
+                      <th><h5 class="main-title">Total:<strong> <i class="fas fa-rupee-sign"></i>{{order.get_cart_total}}</strong></h5></th>
+                      
+                          
+                  </tr>
+              </table>
+            </div>
+            <br>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
